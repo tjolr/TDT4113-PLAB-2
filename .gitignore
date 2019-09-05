@@ -3,3 +3,5 @@
 
 #Remove ZIP files
 .zip
+
+venv
