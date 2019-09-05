@@ -1,8 +1,8 @@
 #Remove pdf files
-.pdf
+*.pdf
 
 #Remove ZIP files
-.zip
+*.zip
 
 venv
 
