@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plt
 import players
 
+
 class SingleGame():
     '''SingleGame'''
 
@@ -16,7 +17,8 @@ class SingleGame():
         self.result_string = ""
 
     def execute_game(self):
-        '''Execute game'''
+        '''Execute game with two players. Give points and
+        makes a result string'''
         self.player1_action = self.player1.choose_reaction()
         self.player2_action = self.player2.choose_reaction()
 
@@ -38,6 +40,7 @@ class SingleGame():
     def __str__(self):
         return f"{self.player1} chose {self.player1_action}, " \
                f"and {self.player2} chose {self.player2_action}. Result: {self.result_string}"
+
 
 class MultipleGames():
     '''Multiple Games class'''
@@ -70,8 +73,8 @@ class MultipleGames():
 
         result_string = f"\n{self.player1} won " \
                         f"{(self.player1_points * 100)/self.number_of_games}% " \
-                       f"of the games while {self.player2} won " \
-                       f"{(self.player2_points * 100)/self.number_of_games}% " \
+            f"of the games while {self.player2} won " \
+            f"{(self.player2_points * 100)/self.number_of_games}% " \
                         f"of the games \n"
         result_string += "\nFINAL RESULT: "
         if self.player1_points == self.player2_points:
@@ -87,8 +90,9 @@ class MultipleGames():
 
         print(result_string)
 
-        #Showing Matplotlib
+        # Showing Matplotlib
         plt.show()
+
 
 def main():
     '''Main Method'''
@@ -97,7 +101,32 @@ def main():
     MOSTCOMMON_PLAYER = players.MostCommonPlayer()
     HISTORIC_PLAYER = players.HistoricPlayer(3)
 
-    MULTIPLE_GAMES = MultipleGames(SEQUENTIAL_PLAYER, RANDOM_PLAYER, 100)
+    print("Welcome to the Rock, Paper & Scissor game!")
+    print("Please type in valid players: 'random', 'sequential', 'mostcommon' or 'historic'.")
+
+    player1 = input("Who is player 1? ")
+    player2 = input("Who is player 2? ")
+
+    def get_player(player):
+        '''Getting the chosen player'''
+        try:
+            my_player = None
+            if player == "random":
+                my_player = RANDOM_PLAYER
+            elif player == "sequential":
+                my_player = SEQUENTIAL_PLAYER
+            elif player == "mostcommon":
+                my_player = MOSTCOMMON_PLAYER
+            elif player == "historic":
+                my_player = HISTORIC_PLAYER
+            return my_player
+        except:
+            print("You did not type a valid playerclass")
+
+    first_player = get_player(player1)
+    second_player = get_player(player2)
+
+    MULTIPLE_GAMES = MultipleGames(first_player, second_player, 100)
     MULTIPLE_GAMES.arrange_tournament()
 
 main()

@@ -140,8 +140,6 @@ class HistoricPlayer():
                 most_frequent_after_subseq = most_frequent(
                     freq_after_subseq_string)
 
-            print(f"most frequent {most_frequent_after_subseq}")
-
             chosen_action = str(
                 self.actions[random.randint(0, len(self.actions) - 1)])
 
@@ -149,8 +147,6 @@ class HistoricPlayer():
                 if most_frequent_after_subseq == str(self.actions[i]):
                     chosen_action = str(
                         self.actions[(i - 1) % len(self.actions)])
-
-            print(f"chosen action: {chosen_action}")
 
             return Action(chosen_action)
 
@@ -164,3 +160,7 @@ class HistoricPlayer():
 
     def __str__(self):
         return self.name
+
+
+
+
