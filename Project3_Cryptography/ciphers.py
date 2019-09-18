@@ -131,7 +131,7 @@ class Unbreakable(Cipher):
 
     def generate_keys(self):
         '''Generating keys for Caesar'''
-        word_key = "abacus"
+        word_key = "kiev"
         word_key_decrypt = self.generate_decryption_key(word_key)
         return word_key, word_key_decrypt
 

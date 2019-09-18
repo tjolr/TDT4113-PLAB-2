@@ -66,14 +66,30 @@ class Hacker(Person):
 
     def hack(self):
         """Main method of the hacker"""
+
+        #The hacker can only hack english words in sentences without symbols
+        #This is only what the task asked for
+
         possible_keys = self.cipher.get_possible_keys()
+        with open("english_words.txt") as file:
+            lines = file.readlines()
+            lines = set([word.strip() for word in lines])
 
         for i, key in enumerate(possible_keys):
             result = self.cipher.decode(self.code, key)
-            first = result.split(' ')[0].lower()
-            print(i, " of line ", len(possible_keys))
+            result_list = result.split(' ')
 
-            if check_for_word(first, "english_words.txt"):
+            print(f"Searching line {i} of {len(possible_keys)}")
+
+            line_found = False
+            for i, word in enumerate(result_list):
+                if word.lower() in lines:
+                    line_found = True
+                else:
+                    line_found = False
+                    break
+
+            if line_found:
                 print("\nThe Hacker found this line: ")
                 print(f'{bold_text(result)}')
                 correct = input("Is this your original message? (j/n) ")
@@ -148,7 +164,7 @@ def main():
     affine_sender = Sender(affine)
     affine_sender.set_key(affine_encode_keys)
     affine_sender.set_clear_tekst(
-        "The greatest cryptography technique is Affine")
+        "The greatest cryptography technique is")
     affine_sender_operated = affine_sender.operate_cipher()
     print(f"Affine sender operated: {affine_sender_operated}")
 
@@ -165,7 +181,7 @@ def main():
 
     unbr_sender = Sender(unbreakable)
     unbr_sender.set_key(unbr_keys[0])
-    unbr_sender.set_clear_tekst("this is Unbreakable!")
+    unbr_sender.set_clear_tekst("this task is very fascinating")
     unbr_sender_operated = unbr_sender.operate_cipher()
     print(f"Unbreakable sender operated: {unbr_sender_operated}")
 
@@ -197,8 +213,8 @@ def main():
 
     # Hacker
     print("\nHacker")
-    hacker = Hacker(unbreakable)
-    hacker.set_code(unbr_sender_operated)
+    hacker = Hacker(affine)
+    hacker.set_code(affine_sender_operated)
     hacker.hack()
 
 
